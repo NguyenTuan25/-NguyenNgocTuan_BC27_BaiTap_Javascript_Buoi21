@@ -168,7 +168,7 @@ function display(staffs) {
             <td>${staff.calcScore()}</td>
             <td>${staff.calcLoai()}</td>
             <td>
-            <button  data-target="#myModal" data-toggle="modal" onclick="selectStaff('${
+            <button  data-target="#myModal" data-toggle ="modal" onclick="selectStaff('${
               staff.tk
             }')" class="btn btn-success">Cập nhật</button>
             <button onclick="deleteStaff('${
@@ -252,6 +252,14 @@ function findStaff(staffTk) {
 }
 // Hàm này sẽ được gọi khi click vào nút Cập nhật ở dưới form
 function updateStaff() {
+  document.getElementById("tbTKNV").style.display = "block";
+  document.getElementById("tbTen").style.display = "block";
+  document.getElementById("tbEmail").style.display = "block";
+  document.getElementById("tbMatKhau").style.display = "block";
+  document.getElementById("tbNgay").style.display = "block";
+  document.getElementById("tbLuongCB").style.display = "block";
+  document.getElementById("tbChucVu").style.display = "block";
+  document.getElementById("tbGiolam").style.display = "block";
   // B1: DOM lấy value từ input
   var tk = document.getElementById("tknv").value;
   var name = document.getElementById("name").value;
@@ -261,6 +269,12 @@ function updateStaff() {
   var luongCb = +document.getElementById("luongCB").value;
   var chucVu = document.getElementById("chucvu").value;
   var gioLam = +document.getElementById("gioLam").value;
+  var isValid = validation();
+  if (!isValid) {
+    alert("Vui Lòng nhập vào các giá trị");
+    return;
+  }
+  
   // B2: Khởi tạo đối tượng staff từ các giá trị input
   var staff = new Staff(
     tk,
@@ -347,6 +361,8 @@ function validation() {
     isValid = false;
     document.getElementById("tbLuongCB").innerHTML =
       "Lương  không được để trống";
+  } else if (luongCb < 1000000 || luongCb > 20000000) {
+    document.getElementById("tbLuongCB").innerHTML = "Lương không phù hợp";
   } else {
     document.getElementById("tbLuongCB").innerHTML = "";
   }
